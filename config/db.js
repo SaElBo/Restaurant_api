@@ -7,6 +7,7 @@ const connectDB = async () => {
         {
             useNewUrlParser: true,
             useUnifiedTopology: true,
+            useCreateIndex: true,
         });
     // option to avoid deprecation error ↑
 
