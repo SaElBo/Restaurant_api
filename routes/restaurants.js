@@ -4,11 +4,12 @@ const {
     getSingleRestaurant,
     createRestaurant,
     updateRestaurant,
-    deleteRestaurant
+    deleteRestaurant,
+    getRestaurantsInRadius
 } = require('../controllers/restaurants');
 
 const router = express.Router();
-
+router.route('/radius/:zipcode/:country/:distance').get(getRestaurantsInRadius);
 
 //
 router.route('/')
