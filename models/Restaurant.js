@@ -63,7 +63,7 @@ const RestaurantSchema = new mongoose.Schema({
         enum: [
             'Italian',
             'Exotic',
-            'Fast food',
+            'FastFood',
             'Fish',
             'Other'
         ]

@@ -1,0 +1,40 @@
+[
+    {
+        "name": "al Ristorante",
+        "description": "ristorante con vista mare in un atmosfera fantastica",
+        "website": "https://www.udemy.com/course/nodejs-api-masterclass/learn/lecture/16581866#questions/11098185",
+        "phone": "3289955627",
+        "email": "ristornate@gmail.com",
+        "address": "via indipendenza 9, Barletta, 76121, it",
+        "cuisine": "Italian"
+    },
+    {
+        "name": "piu ke kebab",
+        "description": "ristorante kebab",
+        "website": "https://www.udemy.com/course/nodejs-api-masterclass/learn/lecture/16581866#questions/11098185",
+        "phone": "3289955627",
+        "email": "ristornannte@gmail.com",
+        "address": "via brigata barletta 9, Barletta, 76121, it",
+        "cuisine": "FastFood"
+    },
+    {
+        "name": "Pescharia",
+        "description": "ristorante con vista mare ",
+        "website": "https://www.udemy.com/course/nodejs-api-masterclass/learn/lecture/16581866#questions/11098185",
+        "phone": "3289955627",
+        "email": "ristornate@gmail.com",
+        "address": "via barletta, Trani, 76125, it",
+        "cuisine": "Italian"
+    },
+    {
+        "name": "pozzo",
+        "description": "ristorante cssun atmosfera fantastica",
+        "website": "https://www.udemy.com/course/nodejs-api-masterclass/learn/lecture/16581866#questions/11098185",
+        "phone": "3289955627",
+        "email": "ristornate@gmail.com",
+        "address": "via Vaglienti 10, Grugliasco ,10095, it",
+        "cuisine": "Italian"
+    }
+    
+    
+]

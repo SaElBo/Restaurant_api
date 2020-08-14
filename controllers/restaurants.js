@@ -10,7 +10,15 @@ const asyncHandler = require('../middleware/async');
 //@acess        Public
 exports.getRestaurants = asyncHandler(async (req, res, next) => {
 
-    const allRestaurants = await Restaurant.find({});
+    let query;
+
+    let queryStr = JSON.stringify(req.query);
+
+    queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
+
+    query = await Restaurant.find(JSON.parse(queryStr));
+
+    const allRestaurants = await query;
     res.status(200).json({ success: true, count: allRestaurants.length, data: allRestaurants });
 
 });
@@ -89,7 +97,7 @@ exports.getRestaurantsInRadius = asyncHandler(async (req, res, next) => {
     const loc = await geocoder.geocode(zipcode);
 
     //find the right loc based on the contry code
-     const rightLoc = loc.filter(el => el.countryCode === country);
+    const rightLoc = loc.filter(el => el.countryCode === country);
 
     //extract lat & lng from rightLoc
     const lat = rightLoc[0].latitude;
@@ -103,7 +111,7 @@ exports.getRestaurantsInRadius = asyncHandler(async (req, res, next) => {
     const radius = distance / 6378;
 
     const restaurant = await Restaurant.find({
-        location: { $geoWithin: { $centerSphere: [[lat ,lng], radius] } }
+        location: { $geoWithin: { $centerSphere: [[lat, lng], radius] } }
     });
 
 
