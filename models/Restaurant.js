@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const slugify = require('slugify');
 const geocoder = require('../utils/geocoder');
 
+
 const RestaurantSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -93,6 +94,8 @@ RestaurantSchema.pre('save', function(next){
     next();
 })
 
+
+
 //Geocode & create location fields
 
 RestaurantSchema.pre('save', async function(next){
@@ -110,6 +113,8 @@ RestaurantSchema.pre('save', async function(next){
 
   // Do not save address in DB
   this.address = undefined;
+  //format the name insert by the user to have the first letter to upperCase this helps with sorting by name
+  this.name = this.name.charAt(0).toUpperCase() + this.name.slice(1);
   next();
 })
 module.exports = mongoose.model('Restaurant', RestaurantSchema);

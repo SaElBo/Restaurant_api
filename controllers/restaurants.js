@@ -12,13 +12,44 @@ exports.getRestaurants = asyncHandler(async (req, res, next) => {
 
     let query;
 
-    let queryStr = JSON.stringify(req.query);
+    // Copy of req.query
+    const reqQuery = { ...req.query };
 
+    //Field to esxclude
+    const removeFields = ['select', 'sort'];
+
+    //Loop over removeFields and delete them from reqQuerry
+    removeFields.forEach(param => delete reqQuery[param]);
+
+    //Create query string
+    let queryStr = JSON.stringify(reqQuery);
+
+    // Create mongoose operators ($gt,$gte ecc)
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
 
-    query = await Restaurant.find(JSON.parse(queryStr));
+    //Finding resurce
+    query = Restaurant.find(JSON.parse(queryStr));
 
+    // Select fields
+    if (req.query.select) {
+        const fields = req.query.select.split(',').join(' ');
+        query = query.select(fields);
+    }
+
+    //Sort field
+    if(req.query.sort){
+        const sortBy = req.query.sort.split(',').join(' ');
+        query = query.sort(sortBy);
+        
+    }else{
+        query = query.sort('-createdAt');
+    }
+
+
+    //Executing querry
     const allRestaurants = await query;
+
+    //Return response
     res.status(200).json({ success: true, count: allRestaurants.length, data: allRestaurants });
 
 });
