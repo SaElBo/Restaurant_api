@@ -97,6 +97,9 @@ const RestaurantSchema = new mongoose.Schema({
     }
 
 
+}, {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
 });
 
 RestaurantSchema.pre('save', function(next){
@@ -127,4 +130,23 @@ RestaurantSchema.pre('save', async function(next){
   this.name = this.name.charAt(0).toUpperCase() + this.name.slice(1);
   next();
 })
+
+
+//Reverse populate with virtuals
+
+RestaurantSchema.virtual('menu', {
+    ref: 'Plate',
+    localField: '_id',
+    foreignField: 'restaurant',
+    justOne: false
+  })
+
+/*
+Schema.virtual('nome nuovo campo', {
+    ref: 'Nome modello da cui prendere i dati',
+    localField: 'chiave locale da cui parte il link',
+    foreignField: 'campo da popolare nel all'altro schema',
+    justOne: false ###POPOLA CON PIU DI UN OGGETTO (ARRAY)
+})
+*/
 module.exports = mongoose.model('Restaurant', RestaurantSchema);

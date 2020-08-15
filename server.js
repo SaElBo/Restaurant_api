@@ -16,6 +16,7 @@ connectDB();
 
 //Route files 
 const restaurants = require ('./routes/restaurants');
+const plates = require ('./routes/plates');
 
 
 const app = express();
@@ -32,6 +33,7 @@ if(process.env.NODE_ENV === 'development'){
 
 //Mount routers 
 app.use('/api/v1/restaurants', restaurants);
+app.use('/api/v1/plates', plates);
 
 app.use(errorHandler)
 

@@ -8,7 +8,14 @@ const {
     getRestaurantsInRadius
 } = require('../controllers/restaurants');
 
+//Include other resource router
+const plateRouter = require('./plates');
+
 const router = express.Router();
+
+//Re-route into other resouce routers
+router.use('/:restaurantId/plates', plateRouter);
+
 router.route('/radius/:zipcode/:country/:distance').get(getRestaurantsInRadius);
 
 //

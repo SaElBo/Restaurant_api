@@ -1,6 +1,5 @@
 const Restaurant = require('../models/Restaurant');
 const ErrorResponse = require('../utils/errorResponse');
-const ErrorResponde = require('../utils/errorResponse');
 
 const geocoder = require('../utils/geocoder');
 const asyncHandler = require('../middleware/async');
@@ -15,7 +14,7 @@ exports.getRestaurants = asyncHandler(async (req, res, next) => {
     // Copy of req.query
     const reqQuery = { ...req.query };
 
-    //Field to esxclude
+    //Field to exclude
     const removeFields = ['select', 'sort', 'page', 'limit'];
 
     //Loop over removeFields and delete them from reqQuerry
@@ -27,8 +26,10 @@ exports.getRestaurants = asyncHandler(async (req, res, next) => {
     // Create mongoose operators ($gt,$gte ecc)
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
 
-    //Finding resurce
+    //Finding resource
     query = Restaurant.find(JSON.parse(queryStr));
+    query = query.populate('menu');
+    
 
     // Select fields
     if (req.query.select) {
