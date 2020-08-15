@@ -1,0 +1,56 @@
+[
+	{
+		"title": "pizza",
+		"description": "pizza margherita",
+		"price": 4,
+		"restaurant": "5f36938a86c08d06a87bc7ab"
+	},
+	{
+		"title": "pizza Piccante",
+		"description": "pizza piccante",
+		"price": 5,
+		"restaurant": "5f36938a86c08d06a87bc7ab"
+	},
+	{
+		"title": "Kebab Panino",
+		"description": "Panino kebab",
+		"price": 4,
+		"restaurant": "5f36938a86c08d06a87bc7ad"
+	},
+	{
+		"title": "Kebab Piadina",
+		"description": "Piadina kebab",
+		"price": 4,
+		"restaurant": "5f36938a86c08d06a87bc7ad"
+	},
+	{
+		"title": "Kebab Piatto",
+		"description": "Piatto kebab",
+		"price": 5,
+		"restaurant": "5f36938a86c08d06a87bc7ad"
+	},
+	{
+		"title": "Sogliola",
+		"description": "Sogliola al forno",
+		"price": 12,
+		"restaurant": "5f36938a86c08d06a87bc7ac"
+	},
+	{
+		"title": "Frittura",
+		"description": "frittura al forno",
+		"price": 18,
+		"restaurant": "5f36938a86c08d06a87bc7ac"
+	},
+	{
+		"title": "Carne alla brace",
+		"description": "Carne brace",
+		"price": 12,
+		"restaurant": "5f36938a86c08d06a87bc7aa"
+	},
+	{
+		"title": "Pasta al forno",
+		"description": "Pasta al forno",
+		"price": 10,
+		"restaurant": "5f36938a86c08d06a87bc7aa"
+	}
+]

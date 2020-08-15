@@ -63,12 +63,22 @@ const RestaurantSchema = new mongoose.Schema({
         required: true,
         enum: [
             'Italian',
+            'Pizza',
+            'Chinese',
+            'Japanese',
+            'Gelato',
+            'Fritti',
+            'Gourmet',
+            'Kebab',
+            'Hamburger',
             'Exotic',
             'FastFood',
             'Fish',
             'Other'
         ]
     },
+
+   
 
  
     averageRating : {
