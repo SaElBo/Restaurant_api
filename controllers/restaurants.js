@@ -136,10 +136,12 @@ exports.deleteRestaurant = asyncHandler(async (req, res, next) => {
 
     const id = req.params.id
 
-    const restaurant = await Restaurant.findByIdAndDelete(id);
+    const restaurant = await Restaurant.findById(id);
     if (!restaurant) {
         return next(new ErrorResponse(`Restaurant not found with the id of ${id}`, 404));
     }
+
+    restaurant.remove();
     res.status(200).json({ success: true, data: {} });
 
 });

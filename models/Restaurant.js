@@ -131,6 +131,12 @@ RestaurantSchema.pre('save', async function(next){
   next();
 })
 
+//Cascade delete plates
+RestaurantSchema.pre('remove', async function(next){
+    await this.model('Plate').deleteMany({restaurant : this._id});
+    next();
+});
+
 
 //Reverse populate with virtuals
 
