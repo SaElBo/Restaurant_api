@@ -1,5 +1,6 @@
 const Restaurant = require('../models/Restaurant');
 const ErrorResponse = require('../utils/errorResponse');
+const path = require('path');
 
 const geocoder = require('../utils/geocoder');
 const asyncHandler = require('../middleware/async');
@@ -9,76 +10,10 @@ const asyncHandler = require('../middleware/async');
 //@acess        Public
 exports.getRestaurants = asyncHandler(async (req, res, next) => {
 
-    let query;
-
-    // Copy of req.query
-    const reqQuery = { ...req.query };
-
-    //Field to exclude
-    const removeFields = ['select', 'sort', 'page', 'limit'];
-
-    //Loop over removeFields and delete them from reqQuerry
-    removeFields.forEach(param => delete reqQuery[param]);
-
-    //Create query string
-    let queryStr = JSON.stringify(reqQuery);
-
-    // Create mongoose operators ($gt,$gte ecc)
-    queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
-
-    //Finding resource
-    query = Restaurant.find(JSON.parse(queryStr));
-    query = query.populate('menu');
-    
-
-    // Select fields
-    if (req.query.select) {
-        const fields = req.query.select.split(',').join(' ');
-        query = query.select(fields);
-    }
-
-    //Sort field
-    if(req.query.sort){
-        const sortBy = req.query.sort.split(',').join(' ');
-        query = query.sort(sortBy);
-        
-    }else{
-        query = query.sort('-createdAt');
-    }
-
-    //Pagination
-    const page = parseInt(req.query.page, 10) || 1;
-    const limit = parseInt(req.query.limit,10) || 25;
-    const startIndex = (page - 1) * limit;
-    const endIndex = page * limit;
-    const total = await Restaurant.countDocuments();
-
-
-    query = query.skip(startIndex).limit(limit);
-
-    //Executing querry
-    const allRestaurants = await query;
-
-    //Pagination result
-    const pagination = {};
-
-    if(endIndex < total){
-        pagination.next = {
-            page : page + 1,
-            limit
-        }
-     }
-
-     if(startIndex > 0){
-         pagination.prev = {
-             page: page - 1,
-             limit
-         }
-     }
-
+   
 
     //Return response
-    res.status(200).json({ success: true, count: allRestaurants.length,pagination, data: allRestaurants });
+    res.status(200).json(res.advanceResults);
 
 });
 
@@ -131,7 +66,7 @@ exports.updateRestaurant = asyncHandler(async (req, res, next) => {
 
 // @desc        delete all restaurant
 // @route       DELETE api/v1/restaurant/:id
-//@acess        Public
+//@acess        Private
 exports.deleteRestaurant = asyncHandler(async (req, res, next) => {
 
     const id = req.params.id
@@ -184,4 +119,52 @@ exports.getRestaurantsInRadius = asyncHandler(async (req, res, next) => {
         data: restaurant
     });
 
+});
+
+
+// @desc        Upload foto
+// @route       PUT api/v1/restaurant/:id/photo
+//@acess        Private
+exports.restaurantUploadPhoto = asyncHandler(async (req, res, next) => {
+
+    const id = req.params.id
+
+    const restaurant = await Restaurant.findById(id);
+    if (!restaurant) {
+        return next(new ErrorResponse(`Restaurant not found with the id of ${id}`, 404));
+    }
+
+    if (!req.files) {
+        return next(new ErrorResponse(`Please insert a photo`, 400));
+    }
+
+    const file = req.files.file;
+    if (!file.mimetype.startsWith('image')) {
+        return next(new ErrorResponse(`Please insert a  valid photo`, 400));
+    }
+
+    //Check file size
+    if (file.size > process.env.MAX_FILE_UPLOAD) {
+        return next(new ErrorResponse(`Please insert a photo lass than ${process.env.MAX_FILE_UPLOAD}`, 400));
+    }
+
+    //Create costum file nam e
+    file.name = `photo_${restaurant._id}.${path.parse(file.name).ext}`;
+   
+    file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async err => {
+        if (err) {
+            console.log(err);
+            return next(new ErrorResponse(`Problem with file upload`, 500));
+
+        }
+
+        await Restaurant.findByIdAndUpdate(id,{photo: file.name},{useFindAndModify: false});
+
+        res.status(200).json({
+            success: true,
+            data: file.name
+        })
+    });
+
+    
 });

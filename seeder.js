@@ -31,7 +31,7 @@ const plates = JSON.parse(
         );
 
 //insert into db
-const importData = async ()=>{
+const inportData = async ()=>{
     try{
         await Restaurant.create(restaurants);
         await Plate.create(plates);
@@ -59,7 +59,10 @@ const deleteData = async ()=>{
 }
 
 if(process.argv[2] === '-i'){
-    importData();   
+    inportData();   
 }else if (process.argv[2] === '-d'){
     deleteData();
+}else if(process.argv[2] === '-a'){
+    deleteData();
+    inportData();
 }

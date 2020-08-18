@@ -1,7 +1,9 @@
+const path = require ('path');
 const express = require('express');
 const dotEnv = require('dotenv');
 const morgan = require ('morgan');
 const colors = require ('colors');
+const fileupload = require ('express-fileupload');
 
 const errorHandler = require('./middleware/error');
 
@@ -17,6 +19,7 @@ connectDB();
 //Route files 
 const restaurants = require ('./routes/restaurants');
 const plates = require ('./routes/plates');
+const auth = require ('./routes/auth');
 
 
 const app = express();
@@ -31,9 +34,15 @@ if(process.env.NODE_ENV === 'development'){
     app.use(morgan('dev'));
 }
 
+//File uploading
+app.use(fileupload());
+
+app.use(express.static(path.join(__dirname,'public')));
+
 //Mount routers 
 app.use('/api/v1/restaurants', restaurants);
 app.use('/api/v1/plates', plates);
+app.use('/api/v1/auth', auth);
 
 app.use(errorHandler)
 

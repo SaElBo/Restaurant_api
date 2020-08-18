@@ -9,22 +9,22 @@ const asyncHandler = require('../middleware/async');
 //@route       GET  api/v1/restaurant/:restaurantId/plate
 //@acess       Public
 exports.getPlate = asyncHandler(async (req, res, next) => {
-    let query;
+   
 
     if (req.params.restaurantId) {
-        query = Plate.find({ restaurant: req.params.restaurantId });
+      const plates = await Plate.find({ restaurant: req.params.restaurantId });
+      return res.status(200).json(
+          {
+              success: true,
+              count: plates.length,
+              data: plates
+          }
+      );
     } else {
-        query = Plate.find().populate('restaurant', 'name description');
+       res.status(200).json(res.advanceResults);
     }
 
-    const plates = await query;
-
-
-    res.status(200).json({
-        success: true,
-        count: plates.length,
-        data: plates
-    })
+   
 });
 
 //@desc        Get single plate

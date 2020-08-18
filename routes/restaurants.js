@@ -5,8 +5,12 @@ const {
     createRestaurant,
     updateRestaurant,
     deleteRestaurant,
-    getRestaurantsInRadius
+    getRestaurantsInRadius,
+    restaurantUploadPhoto
 } = require('../controllers/restaurants');
+
+const Restaurant = require('../models/Restaurant');
+const advanceResults = require('../middleware/advanceResults');
 
 //Include other resource router
 const plateRouter = require('./plates');
@@ -18,9 +22,10 @@ router.use('/:restaurantId/plates', plateRouter);
 
 router.route('/radius/:zipcode/:country/:distance').get(getRestaurantsInRadius);
 
+router.route('/:id/photo').put(restaurantUploadPhoto);
 //
 router.route('/')
-.get(getRestaurants)
+.get(advanceResults(Restaurant, 'menu'),getRestaurants)
 .post(createRestaurant)
 
 router.route('/:id')
