@@ -1,0 +1,34 @@
+[
+    {
+        "_id" : "5f3d2bc77a1a2234d07b8833",
+        "role" : "publisher",
+        "name" : "admin",
+        "email" : "admin@gmail.com",
+        "password" : "123456"
+        
+    },
+    {
+        "_id" : "5f3d2bc77a1a2234d07b88a3",
+        "role" : "publisher",
+        "name" : "admin",
+        "email" : "publisher@gmail.com",
+        "password" : "123456"
+        
+    },
+    {
+        "_id" : "5f3d2bc77a1a2234d07b88b3",
+        "role" : "publisher",
+        "name" : "admin",
+        "email" : "publisher2@gmail.com",
+        "password" : "123456"
+        
+    },
+    {
+        "_id" : "5f3d2bc77a1a2234d07b88c3",
+        "role" : "publisher",
+        "name" : "admin",
+        "email" : "admin2@gmail.com",
+        "password" : "123456"
+        
+    }
+]

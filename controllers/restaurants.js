@@ -1,10 +1,10 @@
-const Restaurant = require('../models/Restaurant');
-const ErrorResponse = require('../utils/errorResponse');
 const path = require('path');
-
 const geocoder = require('../utils/geocoder');
-const asyncHandler = require('../middleware/async');
 
+const asyncHandler = require('../middleware/async');
+const ErrorResponse = require('../utils/errorResponse');
+
+const Restaurant = require('../models/Restaurant');
 //@desc        Get all restaurant
 //@route       GET api/v1/restaurants
 //@acess        Public
@@ -40,7 +40,17 @@ exports.getSingleRestaurant = asyncHandler(async (req, res, next) => {
 //@acess        Private
 exports.createRestaurant = asyncHandler(async (req, res, next) => {
 
+    //Add user to req.body
+    req.body.user = req.user.id;
+
+
+    const publishedRestaurant = await Restaurant.findOne({user: req.user.id});
+
+    if(publishedRestaurant && req.user.role !== 'admin'){
+        return next( new ErrorResponse(`User with id : ${req.user.id} has already published a restaurant, contact an admin for more informations`),400);
+    }
     const restaurant = await Restaurant.create(req.body);
+
     res.status(201).json({ success: true, data: restaurant });
 
 })
@@ -54,13 +64,20 @@ exports.updateRestaurant = asyncHandler(async (req, res, next) => {
     const data = req.body
 
 
-    const updatedRestaurant = await Restaurant.findByIdAndUpdate(id, data, { new: true });
+    let restaurant = await Restaurant.findById(id);
 
     if (!restaurant) {
         return next(new ErrorResponse(`Restaurant not found with the id of ${id}`, 404));
     }
 
-    res.status(200).json({ success: true, data: updatedRestaurant });
+    //Make sure user is restauran owner
+    if(restaurant.user.toString() !== req.user.id && req.user.id !== 'admin'){
+        return next(new ErrorResponse('User non authorazied to update this restaurant',401))
+    }
+
+    restaurant = await Restaurant.findByIdAndUpdate(id,data, { new: true, runValidators: true });
+
+    res.status(200).json({ success: true, data: restaurant });
 
 });
 
@@ -74,6 +91,11 @@ exports.deleteRestaurant = asyncHandler(async (req, res, next) => {
     const restaurant = await Restaurant.findById(id);
     if (!restaurant) {
         return next(new ErrorResponse(`Restaurant not found with the id of ${id}`, 404));
+    }
+
+    //Make sure user is restauran owner
+    if(restaurant.user.toString() !== req.user.id && req.user.id !== 'admin'){
+        return next(new ErrorResponse('User non authorazied to delete this restaurant',401))
     }
 
     restaurant.remove();
@@ -134,11 +156,18 @@ exports.restaurantUploadPhoto = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Restaurant not found with the id of ${id}`, 404));
     }
 
+    //Make sure user is restauran owner
+    if(restaurant.user.toString() !== req.user.id && req.user.id !== 'admin'){
+        return next(new ErrorResponse('User non authorazied to update this restaurant',401))
+    }
+
+    //Check if there is a file
     if (!req.files) {
         return next(new ErrorResponse(`Please insert a photo`, 400));
     }
 
     const file = req.files.file;
+    //check if the file is an image
     if (!file.mimetype.startsWith('image')) {
         return next(new ErrorResponse(`Please insert a  valid photo`, 400));
     }

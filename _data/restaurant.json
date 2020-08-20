@@ -7,7 +7,8 @@
         "phone": "3289955627",
         "email": "ristornate@gmail.com",
         "address": "via indipendenza 9, Barletta, 76121, it",
-        "cuisine": "Italian"
+        "cuisine": "Italian",
+        "user": "5f3d2bc77a1a2234d07b8833"
     },
     {
 	    "_id": "5f36938a86c08d06a87bc7ad",
@@ -17,7 +18,9 @@
         "phone": "3289955627",
         "email": "ristornannte@gmail.com",
         "address": "via brigata barletta 9, Barletta, 76121, it",
-        "cuisine": "FastFood"
+        "cuisine": "FastFood",
+        "user": "5f3d2bc77a1a2234d07b88a3"
+
     },
     {
 	    "_id": "5f36938a86c08d06a87bc7ac",
@@ -27,7 +30,8 @@
         "phone": "3289955627",
         "email": "ristornate@gmail.com",
         "address": "via barletta, Trani, 76125, it",
-        "cuisine": "Italian"
+        "cuisine": "Italian",
+        "user": "5f3d2bc77a1a2234d07b88b3"
     },
     {
 	    "_id": "5f36938a86c08d06a87bc7aa",
@@ -37,7 +41,8 @@
         "phone": "3289955627",
         "email": "ristornate@gmail.com",
         "address": "via Vaglienti 10, Grugliasco ,10095, it",
-        "cuisine": "Italian"
+        "cuisine": "Italian",
+        "user":"5f3d2bc77a1a2234d07b88c3"
     }
     
     

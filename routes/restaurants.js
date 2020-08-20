@@ -17,21 +17,26 @@ const plateRouter = require('./plates');
 
 const router = express.Router();
 
+const {protect, authorize}= require('../middleware/auth');
+
 //Re-route into other resouce routers
 router.use('/:restaurantId/plates', plateRouter);
 
 router.route('/radius/:zipcode/:country/:distance').get(getRestaurantsInRadius);
 
-router.route('/:id/photo').put(restaurantUploadPhoto);
+router.route('/:id/photo').put(protect,authorize('publisher','admin'), restaurantUploadPhoto);
 //
 router.route('/')
-.get(advanceResults(Restaurant, 'menu'),getRestaurants)
-.post(createRestaurant)
+.get(advanceResults(Restaurant, 'menu user'),getRestaurants)
+
+//TODO: remove user from populate, it's only for test purpose
+
+.post(protect,authorize('publisher','admin'), createRestaurant)
 
 router.route('/:id')
 .get(getSingleRestaurant)
-.put(updateRestaurant)
-.delete(deleteRestaurant)
+.put(protect,authorize('publisher','admin'), updateRestaurant)
+.delete(protect,authorize('publisher','admin'), deleteRestaurant)
 
 
 
