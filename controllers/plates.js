@@ -48,13 +48,20 @@ exports.getSingelePlate = asyncHandler(async (req, res, next) => {
 //@acess       Private
 exports.addPlate = asyncHandler(async (req, res, next) => {
 
-    req.body.restaurant = req.params.restaurantId
+    req.body.restaurant = req.params.restaurantId;
+    req.body.user = req.user.id;
 
     const restaurant = await Restaurant.findById(req.params.restaurantId);
 
     if (!restaurant) {
         return next(new ErrorResponse(`No restaurant with the id : ${req.params.restaurantId}`, 404));
     }
+
+    //Make sure user is the owner of the restaurant
+    if(restaurant.user.toString() !== req.user.id && req.user.id !== 'admin'){
+        return next(new ErrorResponse('User non authorazied to add a plate to this restaurant',401))
+    }
+
 
     const plate = await Plate.create(req.body);
 
@@ -77,6 +84,12 @@ exports.updatePlate = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Plate not found with the id of ${id}`, 404));
     }
 
+     //Make sure user is the owner of the restaurant
+     if(plate.user.toString() !== req.user.id && req.user.id !== 'admin'){
+        return next(new ErrorResponse('User non authorazied to update a plate to this restaurant',401))
+    }
+
+
     plate = await Plate.findByIdAndUpdate(req.params.id, req.body, { new: true , runValidators:true, useFindAndModify:false});
 
     res.status(200).json({
@@ -96,6 +109,12 @@ exports.deletePlate = asyncHandler(async (req, res, next) => {
     if (!plate) {
         return next(new ErrorResponse(`Plate not found with the id of ${id}`, 404));
     }
+
+     //Make sure user is the owner of the restaurant
+     if(plate.user.toString() !== req.user.id && req.user.id !== 'admin'){
+        return next(new ErrorResponse('User non authorazied to delete a plate to this restaurant',401))
+    }
+
 
     await plate.remove();
 

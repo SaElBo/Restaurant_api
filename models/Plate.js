@@ -37,6 +37,11 @@ const PlateSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'Restaurant',
         required: true
+    },
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: true
     }
 });
 
@@ -73,6 +78,9 @@ PlateSchema.statics.getAverageCost = async function (restaurantId) {
            console.error(err);
          }
 }
+
+
+
 
 // Call getAverageCost after save
 PlateSchema.post('save', async function () {

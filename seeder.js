@@ -12,6 +12,7 @@ dotenv.config({path : './config/config.env'});
 const Restaurant = require ('./models/Restaurant');
 const Plate = require('./models/Plate');
 const User = require('./models/User');
+const Review = require('./models/Review');
 
 // Connect to DB
 mongoose.connect(process.env.MONGO_URI, {
@@ -32,6 +33,7 @@ const plates = JSON.parse(
         );
 
 const user = JSON.parse(fs.readFileSync(`${__dirname}/_data/user.json`, 'utf-8'));
+const reviews = JSON.parse(fs.readFileSync(`${__dirname}/_data/reviews.json`, 'utf-8'));
 
 //insert into db
 const inportData = async ()=>{
@@ -39,6 +41,7 @@ const inportData = async ()=>{
         await Restaurant.create(restaurants);
         await Plate.create(plates);
         await User.create(user);
+        await Review.create(reviews);
 
         console.log('DATA IMPORTED...'.green.inverse);
         process.exit();
@@ -54,6 +57,7 @@ const deleteData = async ()=>{
         await Restaurant.deleteMany();
         await Plate.deleteMany();
         await User.deleteMany();
+        await Review.deleteMany();
 
         console.log('DATA DESTROYED...'.red.inverse);
         process.exit();
@@ -67,7 +71,4 @@ if(process.argv[2] === '-i'){
     inportData();   
 }else if (process.argv[2] === '-d'){
     deleteData();
-}else if(process.argv[2] === '-a'){
-    deleteData();
-    inportData();
 }

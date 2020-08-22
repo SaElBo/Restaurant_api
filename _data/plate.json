@@ -1,56 +1,94 @@
+
+
 [
 	{
-		"title": "pizza",
-		"description": "pizza margherita",
-		"price": 4,
-		"restaurant": "5f36938a86c08d06a87bc7ab"
+	  "_id": "5d725a4a7b292f5f8ceff789",
+	  "title": "kebab",
+	  "description": "This course will provide you with all of the essentials to become a successful frontend web developer. You will learn to master HTML, CSS and front end JavaScript, along with tools like Git, VSCode and front end frameworks like Vue",
+	  "weeks": 8,
+	  "price": 8000,
+	  
+	  "restaurant": "5f36938a86c08d06a87bc7ad",
+	  "user": "5d7a514b5d2c12c7449be045"
 	},
 	{
-		"title": "pizza Piccante",
-		"description": "pizza piccante",
-		"price": 5,
-		"restaurant": "5f36938a86c08d06a87bc7ab"
+	  "_id": "5d725c84c4ded7bcb480eaa0",
+	  "title": "Kebab 2",
+	  "description": "In this course you will learn full stack web development, first learning all about the frontend with HTML/CSS/JS/Vue and then the backend with Node.js/Express/MongoDB",
+	  "weeks": 12,
+	  "price": 10000,
+	  
+	  "restaurant": "5f36938a86c08d06a87bc7ad",
+	  "user": "5d7a514b5d2c12c7449be045"
 	},
 	{
-		"title": "Kebab Panino",
-		"description": "Panino kebab",
-		"price": 4,
-		"restaurant": "5f36938a86c08d06a87bc7ad"
+	  "_id": "5d725cb9c4ded7bcb480eaa1",
+	  "title": "pizza",
+	  "description": "In this course you will learn all about the front end with HTML, CSS and JavaScript. You will master tools like Git and Webpack and also learn C# and ASP.NET with Postgres",
+	  "weeks": 10,
+	  "price": 12000,
+	  
+	  "restaurant": "5f36938a86c08d06a87bc7aa",
+	  "user": "5d7a514b5d2c12c7449be046"
 	},
 	{
-		"title": "Kebab Piadina",
-		"description": "Piadina kebab",
-		"price": 4,
-		"restaurant": "5f36938a86c08d06a87bc7ad"
+	  "_id": "5d725cd2c4ded7bcb480eaa2",
+	  "title": "pizza 2",
+	  "description": "In this course you will learn to create beautiful interfaces. It is a mix of design and development to create modern user experiences on both web and mobile",
+	  "weeks": 12,
+	  "price": 10000,
+	 
+	  "restaurant": "5f36938a86c08d06a87bc7aa",
+	  "user": "5d7a514b5d2c12c7449be046"
 	},
 	{
-		"title": "Kebab Piatto",
-		"description": "Piatto kebab",
-		"price": 5,
-		"restaurant": "5f36938a86c08d06a87bc7ad"
+	  "_id": "5d725ce8c4ded7bcb480eaa3",
+	  "title": "Pesce",
+	  "description": "Get started building websites and web apps with HTML/CSS/JavaScript/PHP. We teach you",
+	  "weeks": 10,
+	  "price": 12000,
+	  
+	  "restaurant": "5f36938a86c08d06a87bc7ac",
+	  "user": "5c8a1d5b0190b214360dc031"
 	},
 	{
-		"title": "Sogliola",
-		"description": "Sogliola al forno",
-		"price": 12,
-		"restaurant": "5f36938a86c08d06a87bc7ac"
+	  "_id": "5d725cfec4ded7bcb480eaa4",
+	  "title": "Pesce 2",
+	  "description": "In this course you will learn Python for data science, machine learning and big data tools",
+	  "weeks": 10,
+	  "price": 9000,
+	  
+	  "restaurant": "5f36938a86c08d06a87bc7ac",
+	  "user": "5c8a1d5b0190b214360dc031"
 	},
 	{
-		"title": "Frittura",
-		"description": "frittura al forno",
-		"price": 18,
-		"restaurant": "5f36938a86c08d06a87bc7ac"
+	  "_id": "5d725cfec4ded7bcb480eaa5",
+	  "title": "carne",
+	  "description": "This course will teach you how to build high quality web applications with technologies like React, Node.js, PHP & Laravel",
+	  "weeks": 8,
+	  "price": 8000,
+	  
+	  "restaurant": "5f36938a86c08d06a87bc7ab",
+	  "user": "5c8a1d5b0190b214360dc032"
 	},
 	{
-		"title": "Carne alla brace",
-		"description": "Carne brace",
-		"price": 12,
-		"restaurant": "5f36938a86c08d06a87bc7aa"
+	  "_id": "5d725cfec4ded7bcb480eaa6",
+	  "title": "carne 2",
+	  "description": "This course will teach you everything you need to know about quality assurance",
+	  "weeks": 6,
+	  "price": 5000,
+	 
+	  "restaurant": "5f36938a86c08d06a87bc7ab",
+	  "user": "5c8a1d5b0190b214360dc032"
 	},
 	{
-		"title": "Pasta al forno",
-		"description": "Pasta al forno",
-		"price": 10,
-		"restaurant": "5f36938a86c08d06a87bc7aa"
+	  "_id": "5d725cfec4ded7bcb480eaa7",
+	  "title": "Crane 333",
+	  "description": "Get started building mobile applications for IOS using Swift and other tools",
+	  "weeks": 8,
+	  "price": 6000,
+	  
+	  "restaurant": "5f36938a86c08d06a87bc7ab",
+	  "user": "5c8a1d5b0190b214360dc032"
 	}
-]
+  ]
