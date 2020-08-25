@@ -98,7 +98,7 @@ exports.updatePlate = asyncHandler(async (req, res, next) => {
     })
 });
 
-//@desc        Update single plate
+//@desc        Delete single plate
 //@route       DELETE api/v1/plate/:id
 //@acess       Private
 exports.deletePlate = asyncHandler(async (req, res, next) => {

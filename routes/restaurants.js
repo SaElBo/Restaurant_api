@@ -15,6 +15,7 @@ const advanceResults = require('../middleware/advanceResults');
 //Include other resource router
 const plateRouter = require('./plates');
 const reviewsRouter = require('./reviews');
+const ordersRouter = require('./orders');
 
 const router = express.Router();
 
@@ -23,6 +24,7 @@ const {protect, authorize}= require('../middleware/auth');
 //Re-route into other resouce routers
 router.use('/:restaurantId/plates', plateRouter);
 router.use('/:restaurantId/reviews', reviewsRouter);
+router.use('/:restaurantId/orders', ordersRouter);
 
 router.route('/radius/:zipcode/:country/:distance').get(getRestaurantsInRadius);
 

@@ -32,6 +32,10 @@ const PlateSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    availability: {
+        type: Boolean,
+        default: true
+    },
 
     restaurant: {
         type: mongoose.Schema.ObjectId,

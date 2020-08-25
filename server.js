@@ -29,6 +29,7 @@ const plates = require ('./routes/plates');
 const auth = require ('./routes/auth');
 const users = require ('./routes/users');
 const reviews = require ('./routes/reviews');
+const orders = require ('./routes/orders');
 
 
 const app = express();
@@ -67,7 +68,7 @@ app.use(limiter);
 //Prevent http param pollution
 app.use(hpp());
 //Cros origin 
-app.use(corse());
+app.use(cors());
 
 
 app.use(express.static(path.join(__dirname,'public')));
@@ -78,6 +79,7 @@ app.use('/api/v1/plates', plates);
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/users', users);
 app.use('/api/v1/reviews', reviews);
+app.use('/api/v1/orders', orders)
 
 app.use(errorHandler)
 

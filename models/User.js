@@ -33,6 +33,30 @@ const UserSchema = new mongoose.Schema({
     resetPasswordToken: String,
     resetPasswordExpire: Date,
 
+    address : {
+        type : String,
+        required: [true, 'Please add an adress']
+    },
+    
+    location: {
+        // GeoJSON Point
+        type: {
+          type: String,
+          enum: ['Point']
+        },
+        coordinates: {
+          type: [Number],
+          index: '2dsphere'
+        },
+        formattedAddress: String,
+        street: String,
+        city: String,
+        state: String,
+        zipcode: String,
+        country: String
+      },
+
+
     createdAt: {
         type: Date,
         default: Date.now
@@ -79,5 +103,28 @@ UserSchema.methods.getResetPasswordToken = function () {
 
     return resetToken;
 }
+
+
+//Geocode & create location fields
+
+UserSchema.pre('save', async function(next){
+    const loc = await geocoder.geocode(this.address);
+  this.location = {
+    type: 'Point',
+    coordinates: [loc[0].longitude, loc[0].latitude],
+    formattedAddress: loc[0].formattedAddress,
+    street: loc[0].streetName,
+    city: loc[0].city,
+    state: loc[0].stateCode,
+    zipcode: loc[0].zipcode,
+    country: loc[0].countryCode
+  };
+
+  // Do not save address in DB
+  this.address = undefined;
+  //format the name insert by the user to have the first letter to upperCase this helps with sorting by name
+  this.name = this.name.charAt(0).toUpperCase() + this.name.slice(1);
+  next();
+})
 
 module.exports = mongoose.model('User', UserSchema);
