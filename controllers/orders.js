@@ -34,9 +34,9 @@ exports.getOrders = asyncHandler(async (req, res, next) => {
 exports.getOrder = asyncHandler(async (req, res, next) => {
     const order = await Order.findById(req.params.id)
         .populate('restaurant', 'name description');
-    
-    if(!order){
-        return next(new ErrorResponse('No order with this id',404));
+
+    if (!order) {
+        return next(new ErrorResponse('No order with this id', 404));
     }
 
     res.status(200).json({
@@ -54,26 +54,34 @@ exports.addOrder = asyncHandler(async (req, res, next) => {
     req.body.user = req.user.id;
     req.body.restaurant = req.params.restaurantId;
 
-    const plates = req.body.plates
+    //Piatti inseriti dall'utente array di oggetti
+    let plates = req.body.plates
 
-    if(plates.length === 0) return next(new ErrorResponse('Please isert the id of the plates you want to order',400));
 
-   
-    const restaurant  = await Restaurant.findById(req.params.restaurantId);
- 
-    if(!restaurant){
-        return next( new ErrorResponse(`No restaurant with this id`),404);
+
+    if (plates.length === 0) return next(new ErrorResponse('Please insert the id of the plates you want to order', 400));
+
+
+    const restaurant = await Restaurant.findById(req.params.restaurantId);
+
+    if (!restaurant) {
+        return next(new ErrorResponse(`No restaurant with this id`), 404);
     }
-    let menu =  await Plate.find({restaurant : req.params.restaurantId});
+    let menu = await Plate.find({ restaurant: req.params.restaurantId });
+
+    //Ricavo id del piatto dall'array di oggetti 
+    plates = plates.map(element => element.plate);
+
+    
     let filtered = menu.filter(element =>
-        plates.includes(element._id.toString()) 
+        plates.includes(element._id.toString())
     )
-   
-    if(filtered.length !== plates.length){
+
+    if (filtered.length !== plates.length) {
         return next(new ErrorResponse('Impossibile effettuare ordine ', 400));
     }
-    
-  
+
+
     const order = await Order.create(req.body);
 
     res.status(201).json({ success: true, data: order });
@@ -84,7 +92,7 @@ exports.addOrder = asyncHandler(async (req, res, next) => {
 //@acess       Private
 exports.deleteOrder = asyncHandler(async (req, res, next) => {
 
-   
+
     let order = await Order.findById(req.params.id);
 
     if (!order) {
@@ -106,20 +114,20 @@ exports.deleteOrder = asyncHandler(async (req, res, next) => {
 //@acess       Private
 exports.updateOrder = asyncHandler(async (req, res, next) => {
 
-   
+
     let order = await Order.findById(req.params.id);
 
     if (!order) {
         return next(new ErrorResponse(`Order not found with the id of ${id}`, 404));
     }
 
-     //Make sure user is the owner of the restaurant
-     if(order.user.toString() !== req.user.id && req.user.id !== 'admin'){
-        return next(new ErrorResponse('User non authorazied to update a order to this restaurant',401))
+    //Make sure user is the owner of the restaurant
+    if (order.user.toString() !== req.user.id && req.user.id !== 'admin') {
+        return next(new ErrorResponse('User non authorazied to update a order to this restaurant', 401))
     }
 
 
-    order = await Order.findByIdAndUpdate(req.params.id, req.body, { new: true , runValidators:true, useFindAndModify:false});
+    order = await Order.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true, useFindAndModify: false });
 
     res.status(200).json({
         success: true,
